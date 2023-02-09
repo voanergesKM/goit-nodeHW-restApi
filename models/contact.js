@@ -6,7 +6,7 @@ const emailRegex =
 
 const contactSchema = new Schema(
   {
-    name: { type: String, required: true },
+    name: { type: String, required: [true, 'Set name for contact'] },
     email: { type: String, required: true, unique: true, match: emailRegex },
     phone: { type: String, required: true, unique: true },
     favorite: { type: Boolean, default: false },
@@ -17,7 +17,7 @@ const contactSchema = new Schema(
   }
 );
 
-const handleError = (error, data, next) => {
+const handleError = (error, _, next) => {
   const { name, code } = error;
 
   if (name === 'MongoServerError' && code === 11000) {
@@ -38,6 +38,10 @@ const contactJoiSchema = Joi.object({
   favorite: Joi.boolean(),
 });
 
+const contactFavoriteSchema = Joi.object({
+  favorite: Joi.boolean().required('missing field favorite'),
+});
+
 const Contact = model('contact', contactSchema);
 
-module.exports = { Contact, contactJoiSchema };
+module.exports = { Contact, contactJoiSchema, contactFavoriteSchema };
