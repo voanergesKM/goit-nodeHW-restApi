@@ -3,13 +3,15 @@ const { controllerWrapper, validation, isValidId } = require('../../middlewares'
 const { contactJoiSchema, contactFavoriteSchema } = require('../../models');
 
 const {
-  getAllContacts,
-  getContact,
-  addContact,
-  deleteContact,
-  updateContactById,
-  updateStatusContact,
-} = require('../../controllers/contacts/');
+  contactsControllers: {
+    getAllContacts,
+    getContact,
+    addContact,
+    deleteContact,
+    updateContactById,
+    updateStatusContact,
+  },
+} = require('../../controllers/');
 
 const router = express.Router();
 
