@@ -4,7 +4,7 @@ const { User } = require('../models');
 
 const { JWT_SECRET_KEY } = process.env;
 
-const auth = async (req, res, next) => {
+const auth = async (req, _, next) => {
   const { authorization = '' } = req.headers;
   const [bearer, token] = authorization.split(' ');
 
