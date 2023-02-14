@@ -1,5 +1,10 @@
 const { Contact, contactJoiSchema, contactFavoriteSchema } = require('./contact');
-const { User, registerJoiSchema, loginJoiSchema } = require('./userAuth');
+const {
+  User,
+  registerJoiSchema,
+  loginJoiSchema,
+  updateSubscriptionJoiSchema,
+} = require('./userAuth');
 
 module.exports = {
   Contact,
@@ -8,4 +13,5 @@ module.exports = {
   User,
   registerJoiSchema,
   loginJoiSchema,
+  updateSubscriptionJoiSchema,
 };
