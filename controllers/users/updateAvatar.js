@@ -1,14 +1,20 @@
 const fs = require('fs/promises');
 const path = require('path');
 const Jimp = require('jimp');
+const { NotAcceptable } = require('http-errors');
 
 const { User } = require('../../models');
 
 const destinationDir = path.join(__dirname, '../../public/avatars');
 
 const updateAvatar = async (req, res, next) => {
-  const { path: tempPath, filename } = req.file;
+  const { path: tempPath, filename, mimetype } = req.file;
   const { _id } = req.user;
+
+  if (mimetype !== 'image/jpeg') {
+    await fs.unlink(tempPath);
+    throw new NotAcceptable('Please, select an image');
+  }
 
   try {
     const fileExtention = filename.split('.').pop();
@@ -25,7 +31,7 @@ const updateAvatar = async (req, res, next) => {
 
     res.json({ avatarURL });
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error);
   } finally {
     await fs.unlink(tempPath);
   }
