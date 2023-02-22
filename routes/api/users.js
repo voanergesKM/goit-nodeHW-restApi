@@ -1,13 +1,15 @@
 const { Router } = require('express');
 
 const { updateSubscriptionJoiSchema } = require('../../models');
-const { controllerWrapper, auth, validation } = require('../../middlewares');
+const { controllerWrapper, auth, validation, upload } = require('../../middlewares');
 
 const {
-  usersControllers: { getCurrent, updateSubscription },
+  usersControllers: { getCurrent, updateSubscription, updateAvatar },
 } = require('../../controllers');
 
 const router = Router();
+
+router.get('/current', auth, controllerWrapper(getCurrent));
 
 router.patch(
   '/',
@@ -16,6 +18,6 @@ router.patch(
   controllerWrapper(updateSubscription)
 );
 
-router.get('/current', auth, controllerWrapper(getCurrent));
+router.patch('/avatars', auth, upload.single('avatar'), controllerWrapper(updateAvatar));
 
 module.exports = router;
