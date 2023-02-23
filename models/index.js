@@ -4,6 +4,7 @@ const {
   registerJoiSchema,
   loginJoiSchema,
   updateSubscriptionJoiSchema,
+  verifyEmailJoiSchema,
 } = require('./userAuth');
 
 module.exports = {
@@ -14,4 +15,5 @@ module.exports = {
   registerJoiSchema,
   loginJoiSchema,
   updateSubscriptionJoiSchema,
+  verifyEmailJoiSchema,
 };

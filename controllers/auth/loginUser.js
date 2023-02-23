@@ -1,4 +1,4 @@
-const { Unauthorized } = require('http-errors');
+const { Unauthorized, BadRequest } = require('http-errors');
 const { compare } = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -19,6 +19,10 @@ const loginUser = async (req, res, next) => {
 
   if (!isPasswordCorrect) {
     throw new Unauthorized('Email or password is wrong');
+  }
+
+  if (!candidate.verify) {
+    throw new BadRequest('Verification was not passed');
   }
 
   const payload = { id: candidate._id };
